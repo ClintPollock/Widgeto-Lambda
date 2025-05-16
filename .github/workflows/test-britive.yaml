@@ -8,19 +8,16 @@ permissions:
   contents: read
 
 jobs:
-  login-test:
+  test-login:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.11'
 
-    - name: Install Britive CLI (pybritive)
+    - name: Install pybritive
       run: pip install pybritive --quiet
 
     - name: Configure Britive Tenant
@@ -28,7 +25,7 @@ jobs:
         pybritive configure tenant --tenant se-learn --no-prompt
         pybritive configure global --tenant se-learn --format json --no-prompt
 
-    - name: Attempt Britive Login via OIDC
+    - name: Attempt Federated OIDC Login via GitHub
       run: |
-        echo "🔐 Attempting login via GitHub OIDC → Britive federated identity..."
-        pybritive login --method oidc
+        echo "🔐 Attempting federated login to Britive using GitHub OIDC..."
+        pybritive checkout "widgeto-ci-deploy" --federation-provider github
