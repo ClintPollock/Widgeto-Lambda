@@ -24,4 +24,4 @@ jobs:
         run: |
           echo "🔐 Federated checkout using GitHub OIDC"
           pybritive --version
-          pybritive checkout "AWS Standalone/Widgeto Prod/Widgeto-App-S3-Prod-Access" --tenant se-learn --federation-provider github --mode json
+          pybritive checkout "AWS Standalone/Widgeto Prod/Widgeto-App-S3-Prod-Access" --tenant se-learn --federation-provider github-audience --mode json
