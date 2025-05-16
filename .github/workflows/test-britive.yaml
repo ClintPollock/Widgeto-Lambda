@@ -19,12 +19,8 @@ jobs:
 
     - name: Install pybritive
       run: pip install pybritive --quiet
-
-    - name: Configure Britive Tenant
-      run: |
-        pybritive configure tenant --tenant se-learn --no-prompt
-        pybritive configure global --tenant se-learn --format json --no-prompt
-        
+      
     - name: Attempt Federated OIDC Login via GitHub
       run: |
+        pybritive configure tenant --tenant se-learn --no-prompt
         pybritive checkout "AWS Standalone/Widgeto Prod/Widgeto-App-S3-Prod-Access" --federation-provider github
