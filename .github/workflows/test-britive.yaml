@@ -25,8 +25,8 @@ jobs:
 
     - name: Configure Britive Tenant
       run: |
-        pybritive configure tenant --tenant YOUR_TENANT_SLUG --no-prompt
-        pybritive configure global --tenant YOUR_TENANT_SLUG --format json --no-prompt
+        pybritive configure tenant --tenant se-learn --no-prompt
+        pybritive configure global --tenant se-learn --format json --no-prompt
 
     - name: Attempt Britive Login via OIDC
       run: |
