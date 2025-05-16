@@ -26,10 +26,4 @@ jobs:
         
     - name: Attempt Federated OIDC Login via GitHub
       run: |
-        echo "🔐 Attempting federated login to Britive using GitHub OIDC..."
-        if pybritive checkout "widgeto-ci-deploy" --federation-provider github --mode json; then
-          echo "✅ Federated login successful."
-        else
-          echo "❌ Federated login failed."
-          exit 1
-        fi
+        pybritive checkout "widgeto-ci-deploy" --federation-provider github --mode json
