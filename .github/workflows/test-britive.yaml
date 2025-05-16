@@ -1,4 +1,4 @@
-name: Test Britive Login
+name: Test Britive OIDC Login
 
 on:
   workflow_dispatch:
@@ -12,24 +12,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.11'
 
-    - name: Install pybritive
-      run: pip install pybritive
+    - name: Install Britive CLI (pybritive)
+      run: pip install pybritive --quiet
 
-    - name: Attempt Britive Login
-      env:
-        TENANT_NAME: se-learn  # 🔁 Replace with your tenant slug
+    - name: Configure Britive Tenant
       run: |
-        echo "🔐 Attempting Britive login to tenant: $TENANT_NAME"
-        python -c "from pybritive import Britive; \
-try: \
-    b = Britive(); \
-    b.login(); \
-    print('✅ Britive login successful.') \
-except Exception as e: \
-    print(f'❌ Britive login failed: {e}'); \
-    exit(1)"
+        pybritive configure tenant --tenant YOUR_TENANT_SLUG --no-prompt
+        pybritive configure global --tenant YOUR_TENANT_SLUG --format json --no-prompt
+
+    - name: Attempt Britive Login via OIDC
+      run: |
+        echo "🔐 Attempting login via GitHub OIDC → Britive federated identity..."
+        pybritive login
