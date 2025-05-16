@@ -20,13 +20,9 @@ jobs:
     - name: Install pybritive
       run: pip install pybritive --quiet
 
-    - name: Configure Britive Tenant
+    - name: Federated Britive Checkout
       run: |
-        pybritive configure tenant --tenant se-learn --no-prompt
-        ls -la /home/runner/.pybritive/
-    - name: Checkout Britive Profile via GitHub OIDC
-      run: |
-        echo "🔐 Federated checkout via env-only config"
+        echo "🔐 Federated checkout using GitHub OIDC + env var"
         pybritive checkout "AWS Standalone/Widgeto Prod/Widgeto-App-S3-Prod-Access" \
           --federation-provider github \
           --mode json
