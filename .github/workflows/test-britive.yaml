@@ -12,33 +12,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.11'
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
 
-    - name: Install pybritive
-      run: pip install pybritive --quiet
-    - name: Create legacy config for Britive CLI
-      run: |
-        mkdir -p ~/.britive
-        cat <<EOF > ~/.britive/pybritive.config
-        [tenant-se-learn]
-        name=se-learn
-        output_format=json
-        EOF
-  
-        echo "📄 Contents of pybritive.config:"
-        cat ~/.britive/pybritive.config
+      - name: Install pybritive
+        run: pip install pybritive --quiet
 
-
-    - name: Federated Britive Checkout
-      run: |
-        echo "🔐 Federated checkout using GitHub OIDC + env var"
-        pybritive --version
-        ls -la ~/.britive/
-        pybritive checkout "AWS Standalone/Widgeto Prod/Widgeto-App-S3-Prod-Access" \
-          --federation-provider github \
-          --mode json
-      env:
-        PYBRITIVE_TENANT: se-learn
+      - name: Federated Britive Checkout
+        run: |
+          echo "🔐 Federated checkout using GitHub OIDC"
+          pybritive --version
+          pybritive checkout "AWS Standalone/Widgeto Prod/Widgeto-App-S3-Prod-Access" \
+            --federation-provider github \
+            --mode json
+        env:
+          PYBRITIVE_TENANT: se-learn
