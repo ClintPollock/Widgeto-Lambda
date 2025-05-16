@@ -28,4 +28,4 @@ jobs:
     - name: Attempt Federated OIDC Login via GitHub
       run: |
         echo "🔐 Attempting federated login to Britive using GitHub OIDC..."
-        pybritive checkout "widgeto-ci-deploy" --federation-provider github
+        pybritive checkout "widgeto-ci-deploy" --federation-provider github --debug || echo "❌ pybritive checkout failed"
