@@ -23,8 +23,7 @@ jobs:
     - name: Configure Britive Tenant
       run: |
         pybritive configure tenant --tenant se-learn --no-prompt
-        pybritive configure global --tenant se-learn --format json --no-prompt
-
+        
     - name: Attempt Federated OIDC Login via GitHub
       run: |
         echo "🔐 Attempting federated login to Britive using GitHub OIDC..."
