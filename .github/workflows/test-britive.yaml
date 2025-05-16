@@ -19,17 +19,17 @@ jobs:
 
     - name: Install pybritive
       run: pip install pybritive --quiet
-    - name: Create legacy config file manually
+    - name: Create legacy config for Britive CLI
       run: |
-            mkdir -p 
-            cat <<EOF > ~/.britive/pybritive.config
-            [tenant-se-learn]
-            name=se-learn
-            output_format=json
-            EOF
-        
-            echo "📄 Contents of pybritive.config:"
-            cat ~/.britive/pybritive.config/
+        mkdir -p ~/.britive
+        cat <<EOF > ~/.britive/pybritive.config
+        [tenant-se-learn]
+        name=se-learn
+        output_format=json
+        EOF
+  
+        echo "📄 Contents of pybritive.config:"
+        cat ~/.britive/pybritive.config
 
 
     - name: Federated Britive Checkout
