@@ -1,0 +1,52 @@
+name: Test Britive Connectivity
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  test-britive:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install pybritive
+      run: pip install pybritive
+
+    - name: Test Britive Connectivity
+      env:
+        TENANT_NAME: se-learn  # 🔁 Replace with your actual tenant slug
+      run: |
+        echo "🔄 Starting Britive connectivity test..."
+        echo "👉 Tenant: $TENANT_NAME"
+
+        cat <<EOF > test_britive_connectivity.py
+from pybritive import Britive
+import os, sys
+
+tenant = os.environ.get('TENANT_NAME')
+
+try:
+    print(f"🔐 Logging in to Britive tenant: {tenant}")
+    b = Britive()
+    b.login()
+    profiles = b.access_profiles.list()
+    print(f"✅ Connected. Found {len(profiles)} access profiles.")
+    for p in profiles[:5]:
+        print(f"   • {p['name']}")
+except Exception as e:
+    print(f"❌ Failed to connect to Britive: {str(e)}")
+    sys.exit(1)
+EOF
+
+        python test_britive_connectivity.py
