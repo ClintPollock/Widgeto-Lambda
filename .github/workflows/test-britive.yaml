@@ -27,3 +27,4 @@ jobs:
     - name: Attempt Federated OIDC Login via GitHub
       run: |
         pybritive checkout "AWS Standalone/Widgeto Prod/Widgeto-App-S3-Prod-Access" --federation-provider github --mode json
+        aws s3 ls s3://widgeto-app-logs-archive/logs/ 
