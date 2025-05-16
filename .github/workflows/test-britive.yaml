@@ -25,12 +25,12 @@ jobs:
 
     - name: Test Britive Connectivity
       env:
-        TENANT_NAME: se-learn  # 🔁 Replace with your actual tenant slug
+        TENANT_NAME: se-learn  # 🔁 Replace with your Britive tenant slug
       run: |
         echo "🔄 Starting Britive connectivity test..."
         echo "👉 Tenant: $TENANT_NAME"
 
-        cat <<EOF > test_britive_connectivity.py
+        cat > test_britive_connectivity.py << 'EOF'
 from pybritive import Britive
 import os, sys
 
