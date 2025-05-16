@@ -26,6 +26,5 @@ jobs:
         
     - name: Attempt Federated OIDC Login via GitHub
       run: |
-        pybritive ls profiles
+        pybritive ls profiles --federation-provider github --mode json
         pybritive checkout "AWS Standalone/Widgeto Prod/Widgeto-App-S3-Prod-Access" --federation-provider github --mode json
-        aws s3 ls
