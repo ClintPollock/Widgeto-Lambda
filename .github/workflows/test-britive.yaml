@@ -31,4 +31,4 @@ jobs:
     - name: Attempt Britive Login via OIDC
       run: |
         echo "🔐 Attempting login via GitHub OIDC → Britive federated identity..."
-        pybritive login
+        pybritive login --method oidc
