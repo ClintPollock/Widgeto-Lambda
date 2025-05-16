@@ -24,9 +24,11 @@ jobs:
       run: |
         pybritive configure tenant --tenant se-learn --no-prompt
         ls -la /home/runner/.pybritive/
-    - name: Attempt Federated OIDC Login via GitHub
+    - name: Checkout Britive Profile via GitHub OIDC
       run: |
+        echo "🔐 Federated checkout via env-only config"
         pybritive checkout "AWS Standalone/Widgeto Prod/Widgeto-App-S3-Prod-Access" \
-        --tenant se-learn \
-        --federation-provider github \
-        --mode json
+          --federation-provider github \
+          --mode json
+      env:
+        PYBRITIVE_TENANT: se-learn
