@@ -25,13 +25,11 @@ jobs:
         TENANT_NAME: se-learn  # 🔁 Replace with your tenant slug
       run: |
         echo "🔐 Attempting Britive login to tenant: $TENANT_NAME"
-        python -c "
-from pybritive import Britive
-try:
-    b = Britive()
-    b.login()
-    print('✅ Britive login successful.')
-except Exception as e:
-    print(f'❌ Britive login failed: {e}')
-    exit(1)
-        "
+        python -c "from pybritive import Britive; \
+try: \
+    b = Britive(); \
+    b.login(); \
+    print('✅ Britive login successful.') \
+except Exception as e: \
+    print(f'❌ Britive login failed: {e}'); \
+    exit(1)"
