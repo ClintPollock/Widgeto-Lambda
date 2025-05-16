@@ -23,6 +23,7 @@ jobs:
     - name: Federated Britive Checkout
       run: |
         echo "🔐 Federated checkout using GitHub OIDC + env var"
+        pybritive --version
         pybritive checkout "AWS Standalone/Widgeto Prod/Widgeto-App-S3-Prod-Access" \
           --federation-provider github \
           --mode json
