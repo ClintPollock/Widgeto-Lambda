@@ -21,22 +21,22 @@ jobs:
       run: pip install pybritive --quiet
     - name: Create legacy config file manually
       run: |
-            mkdir -p /home/runner/.britive
-            cat <<EOF > /home/runner/.britive/pybritive.config
+            mkdir -p 
+            cat <<EOF > ~/.britive/pybritive.config
             [tenant-se-learn]
             name=se-learn
             output_format=json
             EOF
         
             echo "📄 Contents of pybritive.config:"
-            cat /home/runner/.britive/pybritive.config
+            cat ~/.britive/pybritive.config/
 
 
     - name: Federated Britive Checkout
       run: |
         echo "🔐 Federated checkout using GitHub OIDC + env var"
         pybritive --version
-        ls -la /home/runner/.britive/
+        ls -la ~/.britive/
         pybritive checkout "AWS Standalone/Widgeto Prod/Widgeto-App-S3-Prod-Access" \
           --federation-provider github \
           --mode json
