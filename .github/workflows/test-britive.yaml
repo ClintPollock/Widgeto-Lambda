@@ -22,7 +22,9 @@ jobs:
       
     - name: Attempt Federated OIDC Login via GitHub
       run: |
+        echo "📂 Current working dir: $(pwd)"
+        mkdir -p $PYBRITIVE_CONFIG_HOME
         pybritive configure tenant --tenant se-learn --no-prompt
-        pwd
-        ls -la
-        pybritive checkout "AWS Standalone/Widgeto Prod/Widgeto-App-S3-Prod-Access" --federation-provider github
+        pybritive configure global --tenant se-learn --format json --no-prompt
+        echo "🔐 Attempting federated login + checkout..."
+        pybritive checkout "AWS Standalone/Widgeto Prod/Widgeto-App-S3-Prod-Access" --federation-provider github --mode json
