@@ -11,6 +11,10 @@ jobs:
   test-login:
     runs-on: ubuntu-latest
 
+    env:
+      PYBRITIVE_HOME_DIR: ${{ github.workspace }}
+      PYBRITIVE_ENCRYPTED_CREDENTIAL_PASSPHRASE: "ci-oidc-access-passphrase"
+
     steps:
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -20,9 +24,21 @@ jobs:
       - name: Install pybritive
         run: pip install pybritive --quiet
 
-      - name: Federated Britive Checkout
+      - name: Federated Britive Checkout and Set AWS Credentials
         run: |
-          pybritive checkout "AWS Standalone/Widgeto Prod/Widgeto-App-S3-Prod-Access" \
+          echo "🔐 Performing Britive OIDC Checkout"
+
+          json=$(pybritive checkout "AWS Standalone/Widgeto Prod/Widgeto-App-S3-Prod-Access" \
             --tenant se-learn \
             --federation-provider github-britive \
-            --mode json
+            --mode json)
+
+          # Validate JSON output
+          if echo "$json" | jq empty > /dev/null 2>&1; then
+            eval $(echo "$json" | jq -r '"export AWS_ACCESS_KEY_ID=\(.AccessKeyId)\nexport AWS_SECRET_ACCESS_KEY=\(.SecretAccessKey)\nexport AWS_SESSION_TOKEN=\(.SessionToken)"')
+            aws sts get-caller-identity
+          else
+            echo "❌ pybritive failed or did not return valid JSON:"
+            echo "$json"
+            exit 1
+          fi
