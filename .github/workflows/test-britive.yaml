@@ -23,5 +23,8 @@ jobs:
       - name: Federated Britive Checkout
         run: |
           echo "🔐 Federated checkout using GitHub OIDC"
-          pybritive --version
-          pybritive checkout "AWS Standalone/Widgeto Prod/Widgeto-App-S3-Prod-Access" --tenant se-learn --federation-provider github-britive --mode json
+          eval $(pybritive checkout "AWS Standalone/Widgeto Prod/Widgeto-App-S3-Prod-Access" \
+            --tenant se-learn \
+            --federation-provider github-britive \
+            --mode json | jq -r '"export AWS_ACCESS_KEY_ID=\(.AccessKeyId)\nexport AWS_SECRET_ACCESS_KEY=\(.SecretAccessKey)\nexport AWS_SESSION_TOKEN=\(.SessionToken)"')
+
