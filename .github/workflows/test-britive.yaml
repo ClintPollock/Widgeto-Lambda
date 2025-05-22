@@ -26,19 +26,6 @@ jobs:
 
       - name: Federated Britive Checkout and Set AWS Credentials
         run: |
-          echo "🔐 Performing Britive OIDC Checkout"
-
-          json=$(pybritive checkout "AWS Standalone/Widgeto Prod/Widgeto-App-S3-Prod-Access" \
+          pybritive checkout "AWS Standalone/Widgeto Prod/Widgeto-App-S3-Prod-Access" \
             --tenant se-learn \
-            --federation-provider github-britive \
-            --mode json)
-
-          # Validate JSON output
-          if echo "$json" | jq empty > /dev/null 2>&1; then
-            eval $(echo "$json" | jq -r '"export AWS_ACCESS_KEY_ID=\(.AccessKeyId)\nexport AWS_SECRET_ACCESS_KEY=\(.SecretAccessKey)\nexport AWS_SESSION_TOKEN=\(.SessionToken)"')
-            aws sts get-caller-identity
-          else
-            echo "❌ pybritive failed or did not return valid JSON:"
-            echo "$json"
-            exit 1
-          fi
+            --federation-provider github-britive
