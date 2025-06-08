@@ -14,9 +14,9 @@ jobs:
     env:
       BRITIVE_TENANT: se-learn  # use lowercase here as pybritive normalizes it
       BRITIVE_PROFILE_NAME: AWS Standalone/Widgeto Prod/Widgeto-App-S3-Prod-Access
-      FED_PROVIDER: github
+      FED_PROVIDER: github-britive
       AWS_REGION: us-east-2   # adjust if needed
-      S3_BUCKET_NAME: your-bucket-name
+      S3_BUCKET_NAME: britive-audit-logs-archive
 
     steps:
       - name: Set up Python
@@ -32,16 +32,8 @@ jobs:
       - name: Configure Britive and AWS credential_process
         run: |
           mkdir -p ~/.aws
-
-          # Configure Britive tenant
-          # pybritive configure tenant --tenant "$BRITIVE_TENANT" --no-prompt
-          # pybritive configure global --tenant "$BRITIVE_TENANT" --format json --no-prompt
-
           # Add profile alias
-          # pybritive configure update profile-aliases default "$BRITIVE_PROFILE_NAME"
-
-          pybritive checkout "AWS Standalone/Widgeto Prod/Widgeto-App-S3-Prod-Access" -t SE-Learn --federation-provider github-britive
-
+          pybritive configure update profile-aliases default "$BRITIVE_PROFILE_NAME"
           # Set AWS credential_process to use pybritive federation
           cat <<EOF > ~/.aws/credentials
           [default]
