@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      BRITIVE_TENANT: se-learn
+      BRITIVE_TENANT: SE-Learn
       PROFILE_AWS: AWS Standalone/Widgeto Prod/Widgeto-App-S3-Prod-Access
 
     steps:
@@ -21,21 +21,18 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install pybritive
-        run: pip install pybritive --quiet
-
-      - name: Configure pybritive and AWS CLI
+      - name: Install pybritive and AWS CLI
         run: |
-          echo "🔐 Federated checkout using GitHub OIDC"
-          pybritive configure tenant -t $BRITIVE_TENANT -f json --no-prompt
-          pybritive configure global -t $BRITIVE_TENANT -f json --no-prompt
-          pybritive configure update profile-aliases s3 "$PROFILE_AWS"
-          
-          mkdir -p ~/.aws
-          echo -e "[s3]\ncredential_process=pybritive-aws-cred-process -P s3 -F github-britive\nregion=us-west-2" > ~/.aws/credentials
-          
-          echo "🔍 Verifying federated AWS access"
-          aws sts get-caller-identity --profile s3
+          pip install pybritive --quiet
+          pip install awscli --quiet
+
+      - name: Britive OIDC Checkout
+        run: |
+          pybritive checkout "$PROFILE_AWS" -t "$BRITIVE_TENANT" --federation-provider github-britive
+
+      - name: Verify AWS S3 Access
+        run: aws s3 ls
 
       - name: Checkin profile
-        run: pybritive checkin s3 -P github-britive
+        run: |
+          pybritive checkin "$PROFILE_AWS" -t "$BRITIVE_TENANT" --federation-provider github-britive
