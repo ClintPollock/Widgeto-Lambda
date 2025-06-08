@@ -28,11 +28,11 @@ jobs:
 
       - name: Britive OIDC Checkout
         run: |
-          pybritive checkout "$PROFILE_AWS" -t "$BRITIVE_TENANT" --federation-provider github-britive
+          pybritive checkout "$PROFILE_AWS" -t "$BRITIVE_TENANT" --federation-provider github
 
       - name: Verify AWS S3 Access
         run: aws s3 ls
 
       - name: Checkin profile
         run: |
-          pybritive checkin "$PROFILE_AWS" -t "$BRITIVE_TENANT" --federation-provider github-britive
+          pybritive checkin "$PROFILE_AWS" -t "$BRITIVE_TENANT" --federation-provider github
