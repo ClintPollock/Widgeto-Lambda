@@ -40,7 +40,7 @@ jobs:
           # Add profile alias
           # pybritive configure update profile-aliases default "$BRITIVE_PROFILE_NAME"
 
-          pybritive checkout "AWS Standalone/Widgeto Prod/Widgeto-App-S3-Prod-Access" -t SE-Learn --federation-provider github
+          pybritive checkout "AWS Standalone/Widgeto Prod/Widgeto-App-S3-Prod-Access" -t SE-Learn --federation-provider github-britive
 
           # Set AWS credential_process to use pybritive federation
           cat <<EOF > ~/.aws/credentials
