@@ -34,11 +34,13 @@ jobs:
           mkdir -p ~/.aws
 
           # Configure Britive tenant
-          pybritive configure tenant --tenant "$BRITIVE_TENANT" --no-prompt
-          pybritive configure global --tenant "$BRITIVE_TENANT" --format json --no-prompt
+          # pybritive configure tenant --tenant "$BRITIVE_TENANT" --no-prompt
+          # pybritive configure global --tenant "$BRITIVE_TENANT" --format json --no-prompt
 
           # Add profile alias
-          pybritive configure update profile-aliases default "$BRITIVE_PROFILE_NAME"
+          # pybritive configure update profile-aliases default "$BRITIVE_PROFILE_NAME"
+
+          pybritive checkout "AWS Standalone/Widgeto Prod/Widgeto-App-S3-Prod-Access" -t SE-Learn --federation-provider github
 
           # Set AWS credential_process to use pybritive federation
           cat <<EOF > ~/.aws/credentials
