@@ -14,7 +14,7 @@ jobs:
     env:
       BRITIVE_TENANT: se-learn  # use lowercase here as pybritive normalizes it
       BRITIVE_PROFILE_NAME: AWS Standalone/Widgeto Prod/Widgeto-App-S3-Prod-Access
-      FED_PROVIDER: github-britive
+      FED_PROVIDER: github
       AWS_REGION: us-east-2   # adjust if needed
       S3_BUCKET_NAME: your-bucket-name
 
