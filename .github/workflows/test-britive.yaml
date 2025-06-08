@@ -16,7 +16,6 @@ jobs:
       BRITIVE_PROFILE_NAME: AWS Standalone/Widgeto Prod/Widgeto-App-S3-Prod-Access
       FED_PROVIDER: github-britive
       AWS_REGION: us-east-2   # adjust if needed
-      S3_BUCKET_NAME: britive-audit-logs-archive
 
     steps:
       - name: Set up Python
@@ -24,11 +23,10 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install pybritive and AWS CLI
+      - name: Install pybritive cli
         run: |
           pip install pybritive --quiet
-          pip install awscli --quiet
-
+ 
       - name: Configure Britive and AWS credential_process
         run: |
           mkdir -p ~/.aws
@@ -47,8 +45,3 @@ jobs:
         run: |
           echo "Listing S3 buckets..."
           aws s3 ls
-
-      - name: Test AWS Access - List a specific bucket
-        run: |
-          echo "Listing contents of bucket: $S3_BUCKET_NAME"
-          aws s3 ls "s3://$S3_BUCKET_NAME"
